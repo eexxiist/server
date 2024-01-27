@@ -6,6 +6,40 @@ const   http = require('http'),
 const server = http.createServer((req, res) => {
     console.log('Server request');
     console.log(req.url, req.method)
+
+    res.setHeader('Content-Type', 'text/plain');
+
+    if(req.method === 'GET'){
+        fs.readFile('index.html', (err, data) => {
+            if(err){
+                res.writeHead(500);
+                read.end('Error index.html')
+            } else {
+                res.writeHead(200);
+                res.end(data)
+            }
+        })
+    } else if(req.method === 'POST'){
+        let body = '';
+
+        req.on('data', chunk => {
+            body += chunk;
+        })
+        req.on('end', () => {
+            console.log(body);
+            body = JSON.parse(body);
+
+            fs.writeFile('data.json', body, (err) => {
+                if(err){
+                    res.writeHead(500);
+                    read.end('Error index.html')
+                }else{
+                    res.writeHead(200);
+                    res.end('Данные записаны')
+                }
+            })
+        })
+    }
 })
 
 
