@@ -24,10 +24,11 @@ const server = http.createServer((req, res) => {
 
         req.on('data', chunk => {
             body += chunk;
-        })
+        });
+        
         req.on('end', () => {
-            console.log(body);
             body = JSON.parse(body);
+            console.log(body);
 
             fs.writeFile('data.json', body, (err) => {
                 if(err){
