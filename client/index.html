@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
     <title>Simple Form</title>
 </head>
 <body>
     <h2>Введите свои данные</h2>
-    <form action="http://localhost:3000" method="post">
+    <form id="create_form">
         <div>
             <label for="firstName">Имя:</label>
             <input type="text" id="firstName" name="firstName">
@@ -22,6 +22,26 @@
         </div>
     </form>
 
-    <script src="index.js"></script>
+    <table id="user-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <script src="handler.js" type="module"></script>
+
 </body>
 </html>
+
+
+<!-- 1. Добавить кнопку по нажатию которой открывается поп-ап добавления пользователя -->
+<!-- УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ ЪУЪ -->
+<!-- редактирование пользователя -->

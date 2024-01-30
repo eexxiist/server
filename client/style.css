@@ -70,3 +70,14 @@ button:hover {
         padding: 12px;
     }
 }
+
+
+.delete_btn{
+    width: 20px;
+    height: 20px;
+
+    background-color: black;
+    border-radius: 20px;
+
+    cursor: pointer;
+}
