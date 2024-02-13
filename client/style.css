@@ -1,15 +1,39 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #e0f2f1;
     padding: 20px;
-    color: #333;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 h2 {
-    color: #333;
+    color: black;
+    padding-top: 20px;
+}
+
+.wrap, .wrap_edit{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #81c78499;
+    backdrop-filter: blur(3px);
+    pointer-events: all;
+}
+
+.wrap.hidden, .wrap_edit.hidden{
+    display: none;
+    pointer-events: none;
 }
 
 form {
+    position: relative;
     background: #ffffff;
     padding: 20px;
     border-radius: 8px;
@@ -23,26 +47,29 @@ form {
 }
 
 label {
+    padding-top: 10px;
     display: block;
     margin-bottom: 5px;
-    color: #666;
+    color: black 
 }
 
 input[type="text"] {
     width: 100%;
     padding: 10px;
     border-radius: 4px;
-    border: 1px solid #ddd;
-    box-sizing: border-box; /* Для учета padding в ширине */
+    border: 1px solid #c8e6c9;
+    box-sizing: border-box; 
 }
 
 input[type="text"]:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #66bb6a; 
 }
 
-button {
-    background-color: #007bff;
+.button_send {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #4caf50;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -51,9 +78,87 @@ button {
     font-size: 16px;
 }
 
-button:hover {
-    background-color: #0056b3;
+.button_send:hover {
+    background-color: #388e3c;
 }
+
+.close, .button_toggle{
+    position: absolute;
+    top: 20px;
+    right: 20px;  
+    border: none;
+    cursor: pointer;
+}
+
+.close{
+    width: 30px;
+    height: 30px;
+    background-image: url('./images/close.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.button_toggle{
+    width: 50px;
+    height: 50px; 
+    background-image: url('./images/plus.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.delete_btn{
+    width: 20px;
+    height: 20px;
+    background-image: url('./images/delete.svg');
+    cursor: pointer;
+}
+
+.edit_btn{
+    width: 20px;
+    height: 20px;
+    background-image: url('./images/edit.svg');
+    background-size: contain;
+    cursor: pointer;
+}
+
+
+.table_wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.user_table{
+    padding-top: 60px;
+    justify-content: center;
+    margin: 0 auto;
+    width: 80%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin: 20px 0; 
+    background-color: #fff;
+}
+
+.user_table th, 
+.user_table td {
+    padding: 10px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.user_table th {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.user_table tr:last-child td {
+    border-bottom: none;
+}
+
+
 
 /* Стили для мобильных устройств */
 @media (max-width: 600px) {
@@ -69,15 +174,13 @@ button:hover {
         width: 100%;
         padding: 12px;
     }
-}
 
+    .user_table {
+        box-shadow: none;
+    }
 
-.delete_btn{
-    width: 20px;
-    height: 20px;
-
-    background-color: black;
-    border-radius: 20px;
-
-    cursor: pointer;
+    .user_table th, 
+    .user_table td {
+        padding: 8px 10px;
+    }
 }

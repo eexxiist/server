@@ -1,47 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
-    <title>Simple Form</title>
-</head>
-<body>
-    <h2>Введите свои данные</h2>
-    <form id="create_form">
-        <div>
-            <label for="firstName">Имя:</label>
-            <input type="text" id="firstName" name="firstName">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./style.css" />
+        <title>Users</title>
+    </head>
+    <body>
+        <button class="button_toggle" type="button" id="button_toggle"></button>
+        <div class="wrap hidden">
+            <form id="create_form">
+                <button class="close" id="close_button" type="button"></button>
+                <h2>Введите свои данные</h2>
+                <div>
+                    <label for="firstName">Имя:</label>
+                    <input type="text" id="firstName" name="firstName" />
+                </div>
+                <div>
+                    <label for="lastName">Фамилия:</label>
+                    <input type="text" id="lastName" name="lastName" />
+                </div>
+                <div>
+                    <button class="button_send" type="submit">Создать</button>
+                </div>
+            </form>
         </div>
-        <div>
-            <label for="lastName">Фамилия:</label>
-            <input type="text" id="lastName" name="lastName">
+        <div class="wrap_edit hidden">
+            <form id="edit_form">
+                <button class="close" id="close_button_edit" type="button"></button>
+                <h2>Введите свои данные</h2>
+                <div>
+                    <label for="firstName_edit">Имя:</label>
+                    <input type="text" id="firstName_edit" name="firstName_edit" />
+                </div>
+                <div>
+                    <label for="lastName_edit">Фамилия:</label>
+                    <input type="text" id="lastName_edit" name="lastName_edit" />
+                </div>
+                <div>
+                    <button class="button_send" type="submit">Изменить</button>
+                </div>
+            </form>
         </div>
-        <div>
-            <button type="submit">Отправить</button>
+
+        <div class="table_wrap">
+            <table class="user_table" id="user-table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
-    </form>
 
-    <table id="user-table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-    </table>
-
-    <script src="handler.js" type="module"></script>
-
-</body>
+        <script src="handler.js" type="module"></script>
+    </body>
 </html>
 
-
-<!-- 1. Добавить кнопку по нажатию которой открывается поп-ап добавления пользователя -->
-<!-- УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ ЪУЪ -->
-<!-- редактирование пользователя -->
+<!-- пустые поля не активируют кнопку -->
+<!-- раскрасить логи в терминале -->
+<!-- добавить логи по разбиению дате -->
+<!-- адаптив -->
