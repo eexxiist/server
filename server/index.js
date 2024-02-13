@@ -1,7 +1,8 @@
 const http = require("http"),
     url = require("url"),
     fs = require("fs"),
-    port = 5051;
+    port = 5051,
+    logFilePath = './log.txt';
 
 function generateUUID() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
@@ -12,6 +13,38 @@ function generateUUID() {
             return v.toString(16);
         }
     );
+}
+
+function formatDate(date){
+    const months = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+
+    const day = date.getDate(),
+        month = months[date.getMonth()],
+        year = date.getFullYear(),
+        hours = date.getHours().toString().padStart(2, '0'),
+        minutes = date.getMinutes().toString().padStart(2, '0'),
+        second = date.getSeconds().toString().padStart(2, '0');
+
+    return `${day}/${month}/${year}:${hours}:${minutes}:${second}`;
+}
+
+function makeLog(ip, date, method, path, status, message){
+    let log = `${ip} - [${date}] "${method} ${path}" ${status} -> '${message}'`;
+    
+    try{
+
+//         log = `-----------------
+// |--13.02.2024---|
+// -----------------\n${log}`
+
+        fs.appendFileSync(logFilePath, log + '\n');
+        console.log(log)
+    }catch(err){
+        console.log('Error while writing: ' + err)
+    }
 }
 
 const server = http.createServer((req, res) => {
@@ -170,6 +203,16 @@ const server = http.createServer((req, res) => {
                             res.writeHead(500);
                             res.end({ error: "Internal Server Error" });
                         } else {
+
+                            makeLog(
+                                req.headers.origin.split(':')[1].slice(2),
+                                formatDate(new Date()),
+                                req.method,
+                                parsedUrl.pathname,
+                                200,
+                                'User was edited'
+                            )
+
                             res.writeHead(200);
                             res.end();
                         }
