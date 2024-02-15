@@ -15,6 +15,8 @@ function generateUUID() {
     );
 }
 
+let lastLogDate = '';
+
 function formatDate(date){
     const months = [
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -31,21 +33,28 @@ function formatDate(date){
     return `${day}/${month}/${year}:${hours}:${minutes}:${second}`;
 }
 
-function makeLog(ip, date, method, path, status, message){
-    let log = `${ip} - [${date}] "${method} ${path}" ${status} -> '${message}'`;
+function makeLog(ip, date, method, path, status, message) {
+    const logDate = (date instanceof Date) ? date : new Date();
+    const formattedDate = formatDate(logDate);
+    const currentDate = formattedDate.split(':')[0];
     
-    try{
+    try {
+        if (lastLogDate !== currentDate) {
+            const dateSeparator = `|---${currentDate}---|\n`;
+            fs.appendFileSync(logFilePath, dateSeparator);
+        }
+        
+        let log = `${ip} - [${formattedDate}] "${method} ${path}" ${status} -> '${message}'`;
+        fs.appendFileSync(logFilePath, log + '\n');
+        console.log(log);
+    } catch(err) {
+        console.error('Error while writing: ' + err);
+    }
+}
 
 //         log = `-----------------
 // |--13.02.2024---|
 // -----------------\n${log}`
-
-        fs.appendFileSync(logFilePath, log + '\n');
-        console.log(log)
-    }catch(err){
-        console.log('Error while writing: ' + err)
-    }
-}
 
 const server = http.createServer((req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -75,6 +84,7 @@ const server = http.createServer((req, res) => {
             }
 
             try {
+
                 res.writeHead(200);
                 res.end(data);
             } catch (err) {
@@ -115,6 +125,14 @@ const server = http.createServer((req, res) => {
                             res.writeHead(500);
                             res.end({ error: "Internal Server Error" });
                         } else {
+                            makeLog(
+                                req.headers.origin.split(':')[1].slice(2),
+                                formatDate(new Date()),
+                                req.method,
+                                parsedUrl.pathname,
+                                200,
+                                'User was recorded'
+                            )
                             res.writeHead(200);
                             res.end(JSON.stringify(body));
                         }
@@ -149,6 +167,14 @@ const server = http.createServer((req, res) => {
                         res.writeHead(500);
                         res.end({ error: "Internal Server Error" });
                     } else {
+                        makeLog(
+                            req.headers.origin.split(':')[1].slice(2),
+                            formatDate(new Date()),
+                            req.method,
+                            parsedUrl.pathname,
+                            200,
+                            'User was deleted'
+                        )
                         res.writeHead(200);
                         res.end();
                     }
